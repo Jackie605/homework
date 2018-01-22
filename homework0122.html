@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_507093_zet01l7apqf1dcxr.css">
+</head>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+main {
+	position:relative;
+	height: 980px;
+	background:linear-gradient(to right top, rgba(232,103,3,0.3), rgba(66,109,255,0.5)),url(http://pic1.bbzhi.com/fengjingbizhi/wenhuazhilvdilirenwenjingguanbizhijingxuandisanji/human_2009_travel_geographic_desktop_03_497136_11.jpg) center center no-repeat;
+	background-size: cover;
+
+}
+a {
+	text-decoration: none;
+	display: inline-block;
+	color:#000;
+	border:3px solid #fff;
+	padding:3px 5px;
+}
+.toggle {
+	text-align: center;
+}
+input {
+	width: 100%;
+	padding:10px 20px;
+
+}
+.errorMessenge {
+	color: #ff9800;
+	font-size: 14px;
+}
+.login,
+.register {
+	position: absolute;
+	background:#fff;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+.wrapper {
+	position: relative;
+	width: 75%;
+	margin: 0 auto;
+
+}
+input {
+	margin-top: 10px;
+	border:1px solid #eee;
+	padding-left:30px;
+}
+.active {
+	border-bottom:1px solid #000;
+}
+.login {
+	display: none;
+}
+.login,
+.register {
+	width: 430px;
+	height: 250px;
+	transform: translate(-50%,-50%) rotateY(180deg);
+	transition: all 1s;
+	backface-visibility: hidden
+}
+.show {
+	transform: translate(-50%,-50%) rotateY(0deg);
+	transition: all 1s;
+	backface-visibility: hidden
+}
+.fa1 {
+	position:absolute;
+	right:10px;
+	top:10px;
+	z-index: 2;
+	border:0;
+	font-size:40px;
+	color: #eee;
+}
+.input {
+	position: relative;
+}
+.input span {
+	position: absolute;
+	font-size: 20px;
+	top: 16px;
+	left: 3px;
+}
+.icon-x {
+	position: absolute;
+	top: 5px;
+	right: -50px;
+	cursor: pointer;
+}
+</style>
+<body>
+	<header>
+	<a href="#" class='fa1 iconfont icon-myperson1'></a>
+	</header>
+	<main>
+	
+	<div class='login show'>
+	
+	<div class='wrapper'>
+	<span class='cancle1 iconfont icon-x'></span>
+
+	<div class='toggle'>
+	<a class='loginBtn active' href="#">登陆</a>
+	<a class='regBtn' href="#">注册</a>
+    </div>
+
+	<div class='errorMessenge'>&nbsp</div>
+	<form action="/register method="post">
+	<div class='input'>
+	<span class='iconfont icon-person'></span>
+	<input type="text" placeholder="用户名" name="username">
+	</div>
+	<div class='input'>
+	<span class='iconfont icon-mima'></span>
+	<input type="password" placeholder="密码" name="password">
+
+	</div>
+	<input id='login' type="submit" value="登陆">
+
+	</form>
+	</div>
+	</div>
+	
+	<div class='register hidden'>
+	
+	<div class='wrapper'>
+	<span class='cancle2 iconfont icon-x'></span>
+	<div class='toggle'>
+	<a class='loginBtn' href="#">登陆</a>
+	<a class='regBtn' href="#">注册</a>
+    </div>
+	<div class='errorMessenge'>&nbsp </div>
+	<form action="/login" method="get">
+	<div class='input'>
+	<span class='iconfont icon-person'></span>
+	<input type="text" placeholder="请输入用户名" name="username">
+	</div>
+	<div class='input'>
+	<span class='iconfont icon-mima'></span>
+	<input type="password" placeholder="请输入密码" name="password">
+	</div>
+	<div class='input'> 
+	<span class='iconfont icon-mima'></span>
+	<input type="password" placeholder="请输入密码" name="password2">
+	</div>
+	<input id='register' type="submit" value="注册">
+
+	</form>
+	</div>
+	</div>
+	</main>
+	<script>
+	function $(selector){
+		return document.querySelector(selector);
+	}
+	function $$(selector) {
+		return document.querySelectorAll(selector);
+	}
+	var login = $('.login');
+	var register = $('.register');
+	function show(ele){
+		ele.classList.add('show')
+	}
+	function hidden(ele){
+		ele.classList.remove('show')
+	}
+	$$('.loginBtn').forEach(function(item){
+		item.addEventListener('click',function(e){
+			e.preventDefault();
+			$$('.loginBtn').forEach(function(item){
+				item.classList.add('active');
+
+			})
+			item.classList.add('active');
+			$$('.regBtn').forEach(function(item){
+				item.classList.remove('active')
+
+			})
+			show(login);
+			hidden(register);
+		})
+	});
+	$$('.regBtn').forEach(function(item){
+		item.addEventListener('click',function(e){
+			e.preventDefault();
+			$$('.regBtn').forEach(function(item){
+				item.classList.add('active');
+
+			})
+			$$('.loginBtn').forEach(function(item){
+				item.classList.remove('active')
+
+			})
+			show(register);
+			hidden(login);
+		})
+	});
+	var usernameReg = /^\w{2,9}$/;
+	var passwordReg = /^\w{5,11}$/;
+	$('#login').onclick = function(e){
+		e.preventDefault();
+        if(!usernameReg.test($('.login input[name=username]').value)){
+        	$('.login .errorMessenge').innerText = "用户名需输入3-8个字符，包括字母数字下划线";
+        	return false;
+        }
+        if(!passwordReg.test($('.login input[name=password]').value)){
+            $('.login .errorMessenge').innerText = "密码需输入3-10个字符，包括字母数字下划线"
+            return false;
+            }
+        $('.login form').submit();
+        }
+    $('#register').onclick = function(e){
+		e.preventDefault();
+        if(!usernameReg.test($('.register input[name=username]').value)){
+        	$('.register .errorMessenge').innerText = "用户名需输入3-8个字符，包括字母数字下划线";
+        	return false;
+        }
+        if(!passwordReg.test($('.register input[name=password]').value)){
+            $('.register .errorMessenge').innerText = "密码需输入3-10个字符，包括字母数字下划线"
+            return false;
+            }
+        if($('.register input[name=password]').value!==$('.register input[name=password2]').value){
+        	 $('.register .errorMessenge').innerText = "两次输入的密码不一致，请重新输入"
+            return false;
+        }
+        $('.register form').submit();
+        }
+        $('.register').onclick = function(e){
+        	e.stopPropagation();
+        }
+        $('.login').onclick = function(e){
+        	e.stopPropagation();
+        }
+        window.onclick = function(){
+        	$('.show').style.display = "none";
+        }
+        $('.fa1').onclick = function(e){
+        	e.preventDefault();
+        	e.stopPropagation();
+        	$('.show').style.display = "block";
+        }
+        $('.cancle1').onclick = function(){
+        	$('.show').style.display = "none";
+        }
+        $('.cancle2').onclick = function(){
+        	$('.show').style.display = "none";
+        }
+
+
+
+	</script>
+</body>
+</html>
